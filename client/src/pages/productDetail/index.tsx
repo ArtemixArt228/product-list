@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./index.css";
 
@@ -11,7 +11,10 @@ import {
 } from "../../redux/services/comments";
 
 import Modal from "../../components/modal";
+
 import { Product } from "../../interfaces/product";
+import { Comment } from "../../interfaces/comments";
+
 import { getModalSelector, openMod } from "../../redux/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 
@@ -23,7 +26,7 @@ const ProductDetail = () => {
   const {
     data: dataProduct,
     isFetching: isFetchingProduct,
-    error,
+    error: productError,
   }: {
     data: { product: Product };
     isFetching: boolean;
@@ -31,8 +34,15 @@ const ProductDetail = () => {
   } = useGetProductQuery<any>(id);
 
   const [addNewComment, response] = useAddCommentMutation();
-  /*const { data: dataComments, isFetching: isFetchingComments } =
-    useGetCommentsQuery();*/
+  const {
+    data: dataComments,
+    isFetching: isFetchingComments,
+    error: commentsError,
+  }: {
+    data: { comments: Comment[] };
+    isFetching: boolean;
+    error: any;
+  } = useGetCommentsQuery<any>(id);
 
   const [comment, setComment] = useState<any>({
     productId: id,
@@ -47,12 +57,11 @@ const ProductDetail = () => {
     } else {
       addNewComment(comment)
         .unwrap()
-        .then((data) => {
-          console.log(data);
-        })
+        .then(() => {})
         .catch((error) => {
           console.log(error);
         });
+      setComment({ productId: id, description: "" });
     }
   };
 
@@ -104,11 +113,11 @@ const ProductDetail = () => {
             }
           />
           <button onClick={addComment}>Add Comment</button>
-          <div className="product_comments-comment">
-            {/*dataComments?.map((comment) => (
-              <p>{comment}</p>
-            ))*/}
-          </div>
+        </div>
+        <div className="product_comments-comment">
+          {dataComments?.comments.map((comment: Comment) => (
+            <div>{comment.description}</div>
+          ))}
         </div>
       </div>
     </>

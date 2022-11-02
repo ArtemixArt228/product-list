@@ -5,8 +5,12 @@ export const commentsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/comments",
   }),
+  tagTypes: ["Comments"],
   endpoints: (builder) => ({
-    getComments: builder.query<[], void>({ query: () => "/" }),
+    getComments: builder.query<Comment[], any>({
+      query: (id) => `/${id}`,
+      providesTags: ["Comments"],
+    }),
     addComment: builder.mutation({
       query: (comment) => ({
         url: "/",
@@ -16,6 +20,7 @@ export const commentsApi = createApi({
           "Content-type": "application/json; charset=UTF-8",
         },
       }),
+      invalidatesTags: ["Comments"],
     }),
   }),
 });

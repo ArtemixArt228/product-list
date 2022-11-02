@@ -8,6 +8,7 @@ const {
   deleteComment,
 } = require("../controllers/comments");
 
-router.route("/").get(getComments).post(createComment).delete(deleteComment);
+router.route("/").post(createComment).delete(deleteComment);
+router.get("/:id", getComments)
 
 module.exports = router;

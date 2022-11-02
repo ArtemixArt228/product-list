@@ -65,3 +65,8 @@
     color: #f3d2c1;
     border: none;
 }
+
+.product_comments-comment {
+    display: flex;
+    flex-direction: column;
+}

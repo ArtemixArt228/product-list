@@ -16,16 +16,14 @@ const createComment = async (req, res) => {
 };
 
 const getComments = async (req, res) => {
-  const { productId } = req.body;
+  const { id: productId } = req.params;
 
-  const comment = await Comment.find({
+  const comments = await Comment.find({
     productId,
   });
 
-  await comment.save();
-
   res.status(200).json({
-    message: "Success",
+    comments,
   });
 };
 
