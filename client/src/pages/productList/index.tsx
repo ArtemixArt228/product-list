@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Product } from "../../interfaces/product";
 
 import ProductCard from "../../components/productCard";
 import { useGetProductsQuery } from "../../redux/services/products";
 
+import { useAppSelector } from "../../hooks/reduxHooks";
+
+import { getDropdownSelector } from "../../redux/dropdown/dropdownSlice";
+
 const ProductList = () => {
+  const sortByName = useAppSelector(getDropdownSelector);
+  console.log(sortByName);
+
   const {
     data,
     isFetching,
@@ -20,11 +27,21 @@ const ProductList = () => {
     return <>Loading...</>;
   }
 
+  const products = [...data?.products];
+
   return (
     <div className="main_container">
-      {data?.products?.map((product: Product) => (
-        <ProductCard key={product.name} {...product} />
-      ))}
+      {sortByName
+        ? products
+            ?.sort((a, b) => {
+              return a.name.localeCompare(b.name);
+            })
+            .map((product: Product) => (
+              <ProductCard key={product.name} {...product} />
+            ))
+        : products?.map((product: Product) => (
+            <ProductCard key={product.name} {...product} />
+          ))}
     </div>
   );
 };

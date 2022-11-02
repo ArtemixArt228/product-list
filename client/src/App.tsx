@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="wrapper">
-        <Header openModal={openModal} setOpenModal={setOpenModal} />
+        <Header />
         <Routes>
           <Route path="/" element={<ProductList />} />
           <Route path="/:id" element={<ProductDetail />} />

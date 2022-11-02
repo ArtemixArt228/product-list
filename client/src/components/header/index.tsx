@@ -8,17 +8,14 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 
 import { getModalSelector, openMod } from "../../redux/modal/modalSlice";
 
-const Header = ({
-  openModal,
-  setOpenModal,
-}: {
-  openModal: boolean;
-  setOpenModal: Function;
-}) => {
+import {
+  setSortAlphabet,
+  setSortDate,
+} from "../../redux/dropdown/dropdownSlice";
+
+const Header = () => {
   const dispatch = useAppDispatch();
   const modalIsOpen = useAppSelector(getModalSelector);
-
-  const deleteModal = false;
 
   return (
     <header className="header">
@@ -29,7 +26,14 @@ const Header = ({
           </h1>
         </div>
         <div className="header_items">
-          <div className="header_items-dropdown">Dropdown</div>
+          <div className="header_items-dropdown">
+            <button onClick={() => dispatch(setSortAlphabet())}>
+              Sort By Alphabet
+            </button>
+            <button onClick={() => dispatch(setSortDate())}>
+              Sort By Date
+            </button>
+          </div>
           <div className="header_items-add">
             <button
               onClick={() => dispatch(openMod())}

@@ -101,8 +101,10 @@ const ProductDetail = () => {
             </button>
           </div>
         </div>
+        <h3 className="product_comments-headline">Comments Section</h3>
         <div className="product_comments-body">
           <input
+            placeholder="Add comment..."
             type="text"
             value={comment.description}
             onChange={(e) =>
@@ -116,7 +118,9 @@ const ProductDetail = () => {
         </div>
         <div className="product_comments-comment">
           {dataComments?.comments.map((comment: Comment) => (
-            <div>{comment.description}</div>
+            <div key={comment._id} className="comment-body">
+              {comment.description}
+            </div>
           ))}
         </div>
       </div>

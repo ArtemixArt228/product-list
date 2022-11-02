@@ -45,7 +45,6 @@ const Modal = ({
 
   const deleteModal = useAppSelector(getDeleteModSelector);
   const deletedId = useAppSelector(getDeletedIdSelector);
-  console.log(deletedId);
 
   const [addNewProduct, response] = useAddProductMutation();
   const [deleteProduct, res] = useDeleteProductMutation();
