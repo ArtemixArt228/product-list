@@ -1,0 +1,38 @@
+.header {
+    position: fixed;
+    width: 100%;
+    background: #f3d2c1;
+    z-index: 10;
+}
+.header-body {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+}
+.header_items {
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+}
+.header_items-add_btn {
+    cursor: pointer;
+    height: 50px;
+    background: #f582ae;
+    color: #001858;
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    border: none;
+    transition: 0.3s ease;
+}
+.header_items-add_btn:hover {
+    color: #f582ae;
+    background: #001858;
+}
+
+.header_name-headline a{
+    color: #001858;
+    text-decoration: none;
+}
