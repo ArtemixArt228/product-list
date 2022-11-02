@@ -8,7 +8,7 @@ const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    setProducts(state, action: PayloadAction<Product[]>) {
+    setProducts(state, action: PayloadAction<Product[]>): any {
       console.log(action.payload);
       state.products = action.payload;
     },
@@ -20,7 +20,7 @@ const productSlice = createSlice({
         (product: Product) => product._id !== action.payload
       );
     },
-    updateProduct(state, action: PayloadAction<Product>): any {
+    updateTheProduct(state, action: PayloadAction<Product>): any {
       return state.products.map((product: Product) =>
         product._id === action.payload._id ? action.payload : product
       );
@@ -28,7 +28,9 @@ const productSlice = createSlice({
   },
 });
 
-export const { addProduct, deleteById, updateProduct, setProducts } =
+export const { addProduct, deleteById, updateTheProduct, setProducts } =
   productSlice.actions;
 export default productSlice.reducer;
-export const getProductsSelector = (store: any) => store.products;
+export const getProductsSelector = (store: any) => {
+  return store.product.products;
+};

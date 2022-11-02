@@ -7,9 +7,16 @@ export const productsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/products",
   }),
+  tagTypes: ["Products"],
   endpoints: (builder) => ({
-    getProducts: builder.query<Product[], void>({ query: () => "/" }),
-    getProduct: builder.query<Product, any>({ query: (id) => `/${id}` }),
+    getProducts: builder.query<Product[], void>({
+      query: () => "/",
+      providesTags: ["Products"],
+    }),
+    getProduct: builder.query<Product, any>({
+      query: (id) => `/${id}`,
+      providesTags: ["Products"],
+    }),
     addProduct: builder.mutation({
       query: (product) => ({
         url: "/",
@@ -19,12 +26,14 @@ export const productsApi = createApi({
           "Content-type": "application/json; charset=UTF-8",
         },
       }),
+      invalidatesTags: ["Products"],
     }),
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Products"],
     }),
     updateProduct: builder.mutation({
       query: ({ id, product }) => ({
@@ -32,6 +41,7 @@ export const productsApi = createApi({
         method: "PUT",
         body: product,
       }),
+      invalidatesTags: ["Products"],
     }),
   }),
 });

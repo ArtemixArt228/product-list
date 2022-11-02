@@ -15,6 +15,11 @@ import {
   getDeletedIdSelector,
   getDeleteModSelector,
 } from "../../redux/modal/modalSlice";
+import {
+  addProduct,
+  deleteById,
+  updateTheProduct,
+} from "../../redux/product/productSlice";
 
 const Modal = ({
   productId = "",
@@ -40,12 +45,14 @@ const Modal = ({
 
   const deleteModal = useAppSelector(getDeleteModSelector);
   const deletedId = useAppSelector(getDeletedIdSelector);
+  console.log(deletedId);
 
   const [addNewProduct, response] = useAddProductMutation();
   const [deleteProduct, res] = useDeleteProductMutation();
   const [updateProduct, r] = useUpdateProductMutation();
 
   const removeProduct = () => {
+    dispatch(deleteById(deletedId));
     deleteProduct(deletedId);
     dispatch(closeMod());
   };
@@ -62,9 +69,11 @@ const Modal = ({
       return;
     } else {
       if (tryUpdate) {
+        dispatch(updateTheProduct({ id: productId, ...product }));
         updateProduct({ id: productId, product });
         console.log(product);
       } else {
+        dispatch(addProduct({ id: productId, ...product }));
         addNewProduct(product)
           .unwrap()
           .then(() => {})
