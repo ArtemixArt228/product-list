@@ -40,6 +40,7 @@ const Modal = ({
     },
     weight: productToUpdate?.weight || "",
   });
+  const [warn, setWarn] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
@@ -65,12 +66,15 @@ const Modal = ({
       product.size.width === 0 ||
       product.weight === ""
     ) {
-      return;
+      setWarn(true);
+      setTimeout(() => {
+        setWarn(false);
+      }, 3000);
     } else {
+      console.log("nice");
       if (tryUpdate) {
         dispatch(updateTheProduct({ id: productId, ...product }));
         updateProduct({ id: productId, product });
-        console.log(product);
       } else {
         dispatch(addProduct({ id: productId, ...product }));
         addNewProduct(product)
@@ -118,6 +122,7 @@ const Modal = ({
         </div>
       ) : (
         <div className="modal_body-form">
+          {warn && <p className="modal_body-warning">Fill all the inputs!</p>}
           <h3 className="modal_heading">Product Details</h3>
           <form className="modal-form">
             <input

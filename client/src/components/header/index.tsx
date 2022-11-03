@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./index.css";
 import Modal from "../modal";
@@ -14,6 +14,9 @@ import {
 } from "../../redux/dropdown/dropdownSlice";
 
 const Header = () => {
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [sort, setSort] = useState<string>("Date");
+
   const dispatch = useAppDispatch();
   const modalIsOpen = useAppSelector(getModalSelector);
 
@@ -26,13 +29,33 @@ const Header = () => {
           </h1>
         </div>
         <div className="header_items">
-          <div className="header_items-dropdown">
-            <button onClick={() => dispatch(setSortAlphabet())}>
-              Sort By Alphabet
-            </button>
-            <button onClick={() => dispatch(setSortDate())}>
-              Sort By Date
-            </button>
+          <div
+            className="header_items-dropdown"
+            onClick={() => setShowDropdown(!showDropdown)}
+          >
+            <p>Sort By {sort}</p>
+            {showDropdown && (
+              <div className="dropdown-items">
+                <button
+                  onClick={() => {
+                    setShowDropdown(false);
+                    setSort("Alphabet");
+                    dispatch(setSortAlphabet());
+                  }}
+                >
+                  Alphabet
+                </button>
+                <button
+                  onClick={() => {
+                    setShowDropdown(false);
+                    setSort("Date");
+                    dispatch(setSortDate());
+                  }}
+                >
+                  Date
+                </button>
+              </div>
+            )}
           </div>
           <div className="header_items-add">
             <button

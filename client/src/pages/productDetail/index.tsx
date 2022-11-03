@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./index.css";
 
@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useGetProductQuery } from "../../redux/services/products";
 import {
   useAddCommentMutation,
+  useDeleteCommentMutation,
   useGetCommentsQuery,
 } from "../../redux/services/comments";
 
@@ -17,6 +18,7 @@ import { Comment } from "../../interfaces/comments";
 
 import { getModalSelector, openMod } from "../../redux/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { isAllOf } from "@reduxjs/toolkit";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -34,6 +36,7 @@ const ProductDetail = () => {
   } = useGetProductQuery<any>(id);
 
   const [addNewComment, response] = useAddCommentMutation();
+  const [removeComment, res] = useDeleteCommentMutation();
   const {
     data: dataComments,
     isFetching: isFetchingComments,
@@ -117,11 +120,34 @@ const ProductDetail = () => {
           <button onClick={addComment}>Add Comment</button>
         </div>
         <div className="product_comments-comment">
-          {dataComments?.comments.map((comment: Comment) => (
-            <div key={comment._id} className="comment-body">
-              {comment.description}
-            </div>
-          ))}
+          {dataComments?.comments
+            ?.map((comment) => ({ ...comment }))
+            .sort(
+              (a: Comment, b: Comment) =>
+                new Date(b.createdDate).valueOf() -
+                new Date(a.createdDate).valueOf()
+            )
+            .map((comment: Comment) => {
+              const date = new Date(comment.createdDate);
+              return (
+                <div key={comment._id} className="comment-body">
+                  <span
+                    className="cross"
+                    onClick={() => removeComment(comment._id)}
+                  >
+                    ✖
+                  </span>
+                  <p>{comment.description}</p>
+                  <span>
+                    {date.toLocaleString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </span>
+                </div>
+              );
+            })}
         </div>
       </div>
     </>

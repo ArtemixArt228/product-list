@@ -61,6 +61,7 @@
 }
 
 .modal_body-form {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: #fef6e4;
@@ -90,4 +91,10 @@
     padding: 5px 20px;
     outline-width: 0;
     border: 1px solid #001858;
+}
+
+.modal_body-warning {
+    position: absolute;
+    color: red;
+    opacity: 0.8;
 }

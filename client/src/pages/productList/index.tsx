@@ -11,7 +11,6 @@ import { getDropdownSelector } from "../../redux/dropdown/dropdownSlice";
 
 const ProductList = () => {
   const sortByName = useAppSelector(getDropdownSelector);
-  console.log(sortByName);
 
   const {
     data,

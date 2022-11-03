@@ -15,5 +15,8 @@ export const store = configureStore({
     dropdown: dropdownReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(productsApi.middleware),
+    getDefaultMiddleware().concat(
+      productsApi.middleware,
+      commentsApi.middleware
+    ),
 });

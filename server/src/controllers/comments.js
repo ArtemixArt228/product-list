@@ -28,7 +28,7 @@ const getComments = async (req, res) => {
 };
 
 const deleteComment = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   await Comment.findByIdAndDelete(id);
 

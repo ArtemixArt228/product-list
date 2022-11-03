@@ -98,11 +98,26 @@
 }
 
 .comment-body {
+    position: relative;
     background: #8bd3dd;
     margin: 10px auto;
     text-align: center;
     width: 400px;
+    height: 40px;
     font-size: 22px;
     color: #001858;
     border-radius: 10px;
+}
+.comment-body span {
+    font-size: 14px;
+    position: absolute;
+    bottom: 3px;
+    right: 10px;
+    color: #f582ae;
+}
+
+.cross {
+    cursor: pointer;
+    top: 10px;
+    left: -300px;
 }
